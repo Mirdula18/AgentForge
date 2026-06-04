@@ -30,10 +30,9 @@ type NotificationItem = {
 };
 
 type SettingsState = {
-  emailUpdates: boolean;
-  invoiceReminders: boolean;
-  productAnnouncements: boolean;
-  weeklyDigest: boolean;
+  emailNotifications: boolean;
+  pushNotifications: boolean;
+  weeklyReports: boolean;
 };
 
 type WorkspaceContextValue = {
@@ -74,10 +73,9 @@ const initialNotifications: NotificationItem[] = [
 ];
 
 const initialSettings: SettingsState = {
-  emailUpdates: true,
-  invoiceReminders: true,
-  productAnnouncements: false,
-  weeklyDigest: true,
+  emailNotifications: true,
+  pushNotifications: true,
+  weeklyReports: false,
 };
 
 const initialTasks: TaskItem[] = [

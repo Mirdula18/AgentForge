@@ -176,21 +176,21 @@ export const pricingPlans = [
   {
     name: "Starter",
     price: "$29",
-    detail: "Clients, projects, tasks, and invoicing.",
-    cta: "Choose Starter",
+    detail: "Essential tools for small teams. Includes up to 5 team members, basic analytics, task tracking, and standard billing.",
+    cta: "Start free trial",
     featured: false,
   },
   {
     name: "Pro",
     price: "$99",
-    detail: "Advanced analytics, automation, and team permissions.",
-    cta: "Choose Pro",
+    detail: "Complete operating system for growing agencies. Unlimited active clients, advanced workflow automations, custom branding, and team roles.",
+    cta: "Get started",
     featured: true,
   },
   {
     name: "Enterprise",
     price: "Custom",
-    detail: "SSO, SOC-ready controls, and dedicated success support.",
+    detail: "For scaling global agencies. Custom integrations, advanced security, SOC 2 compliance, dedicated success manager, and custom SLA agreements.",
     cta: "Contact Sales",
     featured: false,
   },
@@ -198,18 +198,18 @@ export const pricingPlans = [
 
 export const faqs = [
   {
-    question: "Can I use VEXORIUM without a backend?",
+    question: "How does VEXORIUM secure our agency and client data?",
     answer:
-      "Yes. This frontend uses local state, mock data, and localStorage so it is instantly deployable for demos and client portfolios.",
+      "We take security seriously. All data is encrypted in transit and at rest using bank-grade AES-256 encryption. We also support single sign-on (SSO), granular role-based permissions, and our infrastructure is SOC 2 compliant.",
   },
   {
-    question: "Does the dashboard support mobile workflows?",
+    question: "Can we collaborate directly with our clients?",
     answer:
-      "Yes. The app ships with a responsive shell, animated mobile sidebar, condensed cards, and touch-friendly actions.",
+      "Absolutely. VEXORIUM includes dedicated Client Portals where you can securely share project boards, files, invoices, and messaging, keeping your clients aligned without exposing internal team chatter.",
   },
   {
-    question: "Can I adapt the design for a real SaaS product?",
+    question: "What platforms does VEXORIUM integrate with?",
     answer:
-      "Absolutely. The component structure is modular, the visual system is reusable, and the routes are ready to be wired to real APIs later.",
+      "VEXORIUM integrates natively with standard agency tools including Slack, Stripe, GitHub, Figma, Google Calendar, and HubSpot. You can also build custom triggers and actions using our REST API or Zapier.",
   },
 ];

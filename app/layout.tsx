@@ -21,7 +21,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className="h-full antialiased"
     >
-      <body className="min-h-full bg-background font-sans text-foreground">
+      <body
+        className="min-h-full bg-background font-sans text-foreground"
+        suppressHydrationWarning
+      >
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>

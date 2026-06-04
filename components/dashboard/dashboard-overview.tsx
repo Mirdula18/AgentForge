@@ -48,7 +48,7 @@ export function DashboardOverview() {
         ))}
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[1.45fr_0.95fr]">
+      <section className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
         <Card className="overflow-hidden">
           <CardHeader>
             <div>
@@ -71,7 +71,7 @@ export function DashboardOverview() {
         </Card>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+      <section className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
         <Card>
           <CardHeader>
             <div>
@@ -147,7 +147,7 @@ export function DashboardOverview() {
                 <CardTitle>Calendar</CardTitle>
                 <CardDescription>Upcoming checkpoints for launches and billing.</CardDescription>
               </div>
-              <CalendarDays className="size-5 text-cyan-200" />
+              <CalendarDays className="size-5 text-cyan-500 dark:text-cyan-200" />
             </CardHeader>
             <div className="grid grid-cols-7 gap-2 text-center text-xs text-[var(--text-tertiary)]">
               {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (

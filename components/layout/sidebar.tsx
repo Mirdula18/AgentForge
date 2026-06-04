@@ -58,7 +58,7 @@ export function Sidebar({ mobile = false }: { mobile?: boolean }) {
       </nav>
 
       <div className="mt-auto rounded-[24px] border border-cyan-400/15 bg-cyan-400/10 p-4">
-        <p className="text-xs uppercase tracking-[0.22em] text-cyan-200">Automation</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-200">Automation</p>
         <p className="mt-3 text-sm leading-6 text-[var(--text-primary)]">
           8 overdue reminders and 3 billing nudges scheduled for today.
         </p>

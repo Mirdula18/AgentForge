@@ -44,7 +44,7 @@ export function Topbar() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 rounded-[28px] border border-[var(--border)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between" style={{ background: "var(--topbar-gradient)" }}>
+      <div className="relative z-30 flex flex-col gap-4 rounded-[28px] border border-[var(--border)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between" style={{ background: "var(--topbar-gradient)" }}>
         <div className="relative w-full max-w-lg">
           <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[var(--text-tertiary)]" />
           <Input className="pl-11" placeholder="Search projects, clients, invoices" />

@@ -13,7 +13,7 @@ const buttonVariants = cva(
         ghost:
           "border-[var(--card-inner-border)] bg-[var(--card-inner-bg)] text-[var(--heading)] hover:-translate-y-0.5 hover:border-cyan-400/40 hover:bg-cyan-400/10",
         secondary:
-          "border-cyan-400/20 bg-cyan-400/10 text-cyan-100 hover:bg-cyan-400/15",
+          "border-cyan-400/25 bg-cyan-400/10 text-cyan-600 dark:text-cyan-100 hover:bg-cyan-400/15",
         outline:
           "border-[var(--border)] bg-transparent text-[var(--heading)] hover:border-violet-400/35 hover:bg-violet-400/10",
       },

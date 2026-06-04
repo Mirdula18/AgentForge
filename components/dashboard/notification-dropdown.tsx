@@ -49,7 +49,7 @@ export function NotificationDropdown() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute right-0 z-20 mt-3 w-[340px] rounded-[28px] border border-[var(--border)] p-4 shadow-[0_30px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
+            className="absolute right-0 z-50 mt-3 w-[340px] rounded-[28px] border border-[var(--border)] p-4 shadow-[0_30px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
             style={{ background: "var(--dropdown-bg)" }}
           >
             <div className="mb-4 flex items-center justify-between">
