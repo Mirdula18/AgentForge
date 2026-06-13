@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
+import { registerUser } from "@/lib/actions/auth";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,14 +25,63 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function SignupPage() {
   const router = useRouter();
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/dashboard");
+    setLoading(true);
+    setError("");
+
+    const formData = new FormData(e.currentTarget);
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const result = await registerUser({
+        email,
+        password,
+        name: `${firstName} ${lastName}`.trim(),
+      });
+
+      if ("error" in result && result.error) {
+        setError(result.error);
+        toast(result.error, "error");
+      } else {
+        // Auto sign-in after registration
+        const signInResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (signInResult?.error) {
+          toast("Account created! Please log in.", "success");
+          router.push("/login");
+        } else {
+          toast("Welcome to VEXORIUM!", "success");
+          router.push("/dashboard");
+          router.refresh();
+        }
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+      toast("An unexpected error occurred.", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleOAuth = () => {
-    toast("OAuth sign-in coming soon", "info");
+    toast("OAuth providers require API keys. Configure in production.", "info");
   };
 
   return (
@@ -46,34 +98,39 @@ export default function SignupPage() {
       }
     >
       <form onSubmit={handleSignup} className="space-y-4">
+        {error ? (
+          <div className="rounded-xl border border-red-400/25 bg-red-400/8 px-4 py-3 text-sm text-red-400">
+            {error}
+          </div>
+        ) : null}
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--heading)]" htmlFor="firstName">
               First name
             </label>
-            <Input id="firstName" required />
+            <Input id="firstName" name="firstName" required />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--heading)]" htmlFor="lastName">
               Last name
             </label>
-            <Input id="lastName" required />
+            <Input id="lastName" name="lastName" required />
           </div>
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-[var(--heading)]" htmlFor="email">
             Email
           </label>
-          <Input id="email" type="email" placeholder="name@agency.com" required />
+          <Input id="email" name="email" type="email" placeholder="name@agency.com" required />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-[var(--heading)]" htmlFor="password">
             Password
           </label>
-          <Input id="password" type="password" required />
+          <Input id="password" name="password" type="password" placeholder="Min 6 characters" required />
         </div>
-        <Button className="w-full" type="submit">
-          Start free
+        <Button className="w-full" type="submit" disabled={loading}>
+          {loading ? "Creating account..." : "Start free"}
         </Button>
       </form>
 
