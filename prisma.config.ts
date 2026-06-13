@@ -6,8 +6,8 @@ export default defineConfig({
   schema: path.join("prisma", "schema.prisma"),
   migrations: {
     async adapter() {
-      const { PrismaBetterSQLite } = await import("@prisma/adapter-better-sqlite3");
-      return new PrismaBetterSQLite({ url: "file:prisma/dev.db" });
+      const { PrismaBetterSqlite3 } = await import("@prisma/adapter-better-sqlite3");
+      return new PrismaBetterSqlite3({ url: "file:prisma/dev.db" });
     },
     seed: "npx tsx prisma/seed.ts",
   },
