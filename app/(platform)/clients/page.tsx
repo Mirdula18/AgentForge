@@ -2,16 +2,26 @@
 
 import { FileText, MoreHorizontal, Plus, Search } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast";
-import { clientTable } from "@/data/mock-data";
+import { useClients } from "@/hooks/use-clients";
 
 export default function ClientsPage() {
   const { toast } = useToast();
+  const { data: clients, isLoading } = useClients();
+  const [search, setSearch] = useState("");
+
+  const filteredClients = clients?.filter(
+    (client) =>
+      client.name.toLowerCase().includes(search.toLowerCase()) ||
+      client.project.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <div className="space-y-6 pb-6">
@@ -23,7 +33,12 @@ export default function ClientsPage() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-tertiary)]" />
-            <Input className="w-64 pl-10" placeholder="Search clients..." />
+            <Input
+              className="w-64 pl-10"
+              placeholder="Search clients..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
           <Button onClick={() => toast("Client invitation sent!", "success")}>
             <Plus className="size-4" />
@@ -54,30 +69,46 @@ export default function ClientsPage() {
               </tr>
             </thead>
             <tbody>
-              {clientTable.map((client, index) => (
-                <motion.tr
-                  key={client.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="border-t border-[var(--card-inner-border)] text-[var(--text-secondary)]"
-                >
-                  <td className="px-4 py-4 font-medium text-[var(--heading)]">{client.name}</td>
-                  <td className="px-4 py-4">{client.project}</td>
-                  <td className="px-4 py-4">
-                    <Badge variant={client.stage === "Discovery" ? "violet" : "default"}>
-                      {client.stage}
-                    </Badge>
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <tr key={i}>
+                    <td colSpan={6} className="px-4 py-4">
+                      <Skeleton className="h-6 w-full rounded-lg" />
+                    </td>
+                  </tr>
+                ))
+              ) : filteredClients?.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--text-tertiary)]">
+                    {search ? "No clients match your search." : "No clients yet. Invite your first client!"}
                   </td>
-                  <td className="px-4 py-4">{client.payment}</td>
-                  <td className="px-4 py-4 text-emerald-500 dark:text-emerald-400">{client.performance}</td>
-                  <td className="px-4 py-4 text-right">
-                    <Button variant="ghost" size="icon" className="size-8">
-                      <MoreHorizontal className="size-4" />
-                    </Button>
-                  </td>
-                </motion.tr>
-              ))}
+                </tr>
+              ) : (
+                filteredClients?.map((client, index) => (
+                  <motion.tr
+                    key={client.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="border-t border-[var(--card-inner-border)] text-[var(--text-secondary)]"
+                  >
+                    <td className="px-4 py-4 font-medium text-[var(--heading)]">{client.name}</td>
+                    <td className="px-4 py-4">{client.project}</td>
+                    <td className="px-4 py-4">
+                      <Badge variant={client.stage === "Discovery" ? "violet" : "default"}>
+                        {client.stage}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">{client.payment}</td>
+                    <td className="px-4 py-4 text-emerald-500 dark:text-emerald-400">{client.performance}</td>
+                    <td className="px-4 py-4 text-right">
+                      <Button variant="ghost" size="icon" className="size-8">
+                        <MoreHorizontal className="size-4" />
+                      </Button>
+                    </td>
+                  </motion.tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
