@@ -10,4 +10,7 @@ export default defineConfig({
       return new PrismaBetterSQLite({ url: "file:prisma/dev.db" });
     },
   },
+  datasource: {
+    url: "file:prisma/dev.db",
+  },
 });
